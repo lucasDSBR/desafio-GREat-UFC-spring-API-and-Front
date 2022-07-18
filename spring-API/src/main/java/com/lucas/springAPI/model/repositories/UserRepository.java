@@ -2,14 +2,14 @@ package com.lucas.springAPI.model.repositories;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import com.lucas.springAPI.model.entities.User;
+import com.lucas.springAPI.model.entities.UserEntity;
 /*
  * 
  * @author Lucas Maciel
  * 
  */
 public interface UserRepository 
-	extends PagingAndSortingRepository<User, Integer> {
+	extends PagingAndSortingRepository<UserEntity, Integer> {
 	
-	public Iterable<User> findByNomeContainingIgnoreCase(String name);
+	public Iterable<UserEntity> findByNomeContainingIgnoreCase(String name);
 }

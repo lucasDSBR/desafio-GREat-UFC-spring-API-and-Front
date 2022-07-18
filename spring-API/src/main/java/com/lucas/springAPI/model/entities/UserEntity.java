@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
 /*
  * 
  * @author Lucas Maciel
@@ -14,7 +12,7 @@ import javax.validation.constraints.NotBlank;
  */
 
 @Entity
-public class User {
+public class UserEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +24,7 @@ public class User {
 	private Date dataNascimento;
 	private Date dataCadastro;
 	
-	public User() {
+	public UserEntity() {
 	}
 
 	public int getId() {
