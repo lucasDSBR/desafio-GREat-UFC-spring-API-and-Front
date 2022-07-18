@@ -1,0 +1,12 @@
+.container-register {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 80%;
+    
+}
+.container-register-input {
+    margin: 10px;
+}
+.btn {
+    margin: 10px;
+}
