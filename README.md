@@ -7,7 +7,7 @@ Desafio-GREat-spring-API trata-se de um repositório crado para resolver o desaf
 </center>
 
 
-## API:
+## BACK-END:
 
 Podendo ser encontrada na pasta <a href="https://github.com/lucasDSBR/desafio-GREat-spring-API-and-Front/tree/main/spring-API"><b>"spring-API"</b></a>, a API do sistema foi desenvolvida com base no modelo MVC(model view controller) para melhor atender os requisitos do sistema. Além disso, optei por escolher o banco de dados MySQL para armazenar os dados utilizados em todo o sistema.
 
@@ -30,7 +30,7 @@ Além disso, para evitar erros de CORS, decidi inserir um CrossOrigin nos contro
 #### Tratamento de erros:
 Apara melhor segurança no armazenamento de informações, opitei por realizar todo o tratamento de erros com relação a informações erradas na própria API. Logo, a validação de CPF não ocorre no front alí com o usuário, mas sim no Back-End. Assim, evitando o armazenamento de tais informações.
 - Segurança ??? O Front-End é passível de modificações, logo, validar uma informação apenas acaba não sendo tão vantajoso.
-## FRONT END:
+## FRONT-END:
 Podendo ser encontrada na pasta <a href="https://github.com/lucasDSBR/desafio-GREat-spring-API-and-Front/tree/main/front"><b>"front"</b></a>, o front-end foi desenvolvido totalmente de React + JS. Além disso, para estilização de toda a aplicação, opitei por utilizar o <a href="https://mui.com/pt/"><b>MUI</b></a>.
 
 ### Imagens da aplicação:
