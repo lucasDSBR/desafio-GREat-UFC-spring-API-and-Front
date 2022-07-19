@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.lucas.springAPI.domain.seletores.SearchUserSeletor;
 import com.lucas.springAPI.model.entities.UserEntity;
 import com.lucas.springAPI.model.repositories.UserRepository;
 @Service
@@ -20,6 +21,22 @@ public class UserService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	 
+	
+	public Iterable<UserEntity> searchUser(UserEntity filter) {
+		if(filter.getNome() != "" && filter.getCpf() == "" && filter.getRg() == "")
+			return userRepository.findByNomeContainingIgnoreCase(filter.getNome());
+		if(filter.getNome() != "" && (filter.getCpf() != "" || filter.getRg() == ""))
+			return userRepository.findByNomeAndCpf(filter.getNome(), filter.getCpf());
+		if(filter.getNome() != "" && (filter.getCpf() == "" || filter.getRg() != ""))
+			return userRepository.findByNomeAndRg(filter.getNome(), filter.getRg());
+		if(filter.getNome() == "" && (filter.getCpf() != "" || filter.getRg() != ""))
+			return userRepository.findByCpfOrRg(filter.getCpf(), filter.getRg());
+		else
+			return null;
+	}
+	
+	
 	
 	public UserEntity registerAndUpdateUser(UserEntity dataUser) {
 		if(isCPF(dataUser.getCpf())) {
@@ -37,6 +54,8 @@ public class UserService {
 	public Optional<UserEntity> getUserForId(int idUser) {
 		return userRepository.findById(idUser);
 	}
+	
+	
 	
 	public Page<UserEntity> getUserForPagination(int numPage) {
 		Pageable page = PageRequest.of(numPage, 6);
