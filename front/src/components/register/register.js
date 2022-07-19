@@ -24,6 +24,9 @@ import './register.css';
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+function createData(id, nome, cpf, rg, dataNascimento, nomeMae, dataCadastro) {
+  return { id, nome, cpf, rg, dataNascimento, nomeMae, dataCadastro};
+}
 
 var logs = [];
 
@@ -39,7 +42,7 @@ function Register(props) {
     const [dataCadastro, setDataCadastro] = React.useState("");
     const {loading, error, request } = DataFetch();
     const [openAlert, setOpenAlert] = React.useState(false);
-
+    console.log(props)
     const handleClickOpen = () => { setOpen(true);}; // Abrir dialog de registro
     const handleClose = () => { setOpen(false); }; // Fechar dialog de registros
     const handleClickOpenLogs = () => { setOpenLogs(true); getLogs();}; // Abrir dialog de logs
@@ -70,8 +73,13 @@ function Register(props) {
         setOpenAlert(true);
         setOpen(false); 
         setNome(""); setCpf(""); setRg(""); setNomeMae(""); setDataNascimento(""); setDataCadastro("");
+        if(props.typeIcon != "edit"){
+          props.rows.push( 
+            createData( json.id,  json.nome,  json.cpf,  json.rg, 
+              json.dataNascimento, 
+              json.nomeMae, json.dataCadastro))
+        }
         const {url, options} = await POST_INDEX('logs', bodyLog)
-        const {response, json} = await request(url, options);
       }else{
         setErro(true)
       }

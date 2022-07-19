@@ -30,6 +30,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Register from '../../components/register/register';
 function createData(id, nome, cpf, rg, dataNascimento, nomeMae, dataCadastro) {
   return { id, nome, cpf, rg, dataNascimento, nomeMae, dataCadastro};
 }
@@ -266,6 +267,7 @@ export default function List() {
 
   return (
     <>
+    <Register typeIcon="default" rows={rows}/>
     <Box sx={{ width: '95%'}}>
       <TextField id="standard-basic" label="Nome" variant="standard" sx={{m: 2}} value={nomeSearch} onChange = {(e) => setNomeSearch(e.target.value)}/>
       <TextField id="standard-basic" label="CPF" variant="standard" sx={{m: 2}} value={cpfSearch} onChange = {(e) => setCpfSearch(e.target.value)}/>

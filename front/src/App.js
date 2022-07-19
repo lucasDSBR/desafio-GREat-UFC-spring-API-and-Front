@@ -7,7 +7,6 @@ function App() {
     <div className="app">
       <Header/>
       <div className="app-container">
-        <Register typeIcon="default"/>
         <List/>
       </div>
     </div>
