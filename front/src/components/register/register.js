@@ -1,6 +1,5 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -8,14 +7,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { POST_INDEX, PUT_INDEX, GET_INDEX_ID, GET_INDEX } from '../../api/api';
+import { POST_INDEX, PUT_INDEX, GET_INDEX } from '../../api/api';
 import DataFetch from '../../services/DataFetch';
-import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
-import EditIcon from '@mui/icons-material/Edit';
-import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -31,6 +26,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 var logs = [];
+
 function Register(props) {
     const [erro, setErro] = React.useState(false);
     const [open, setOpen] = React.useState(false);
@@ -44,40 +40,12 @@ function Register(props) {
     const {loading, error, request } = DataFetch();
     const [openAlert, setOpenAlert] = React.useState(false);
 
-
-
-
-    if(props.typeIcon == "edit"){ 
-      //getUserForId(props.idItem)
-    }
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-    const handleClickOpenLogs = () => {
-      setOpenLogs(true);
-      getLogs();
-    };
+    const handleClickOpen = () => { setOpen(true);}; // Abrir dialog de registro
+    const handleClose = () => { setOpen(false); }; // Fechar dialog de registros
+    const handleClickOpenLogs = () => { setOpenLogs(true); getLogs();}; // Abrir dialog de logs
+    const handleCloseLogs = () => { setOpenLogs(false);}; // Fechar dialog de logs
   
-    const handleClose = () => {
-      setOpen(false);
-    };
-    const handleCloseLogs = () => {
-      setOpenLogs(false);
-    }
-
-    async function getUserForId(idUser){
-      const {url, options} = await GET_INDEX_ID('user', idUser);
-      const {response, json} = await request(url, options);
-      console.log("response: ", response);
-      if(response.status === 200) {
-        setOpenAlert(true);
-        setOpen(false);
-      }else{
-
-      }
-
-    }
-
+    // Função para realizar a requisição logs no sistema.
     async function getLogs(){
       const {url, options} = await GET_INDEX('logs', null);
       const {response, json} = await request(url, options);
@@ -92,22 +60,16 @@ function Register(props) {
       }
     }
 
+    // Função para realizar o cadastro ou atualização de usuário no sistema. Além disso, realiza o registro de logs no sistema.
     async function handleSubmit(){
       const bodyLog = { cpfUsuarioAlterado: cpf,  acao: props.typeIcon != "edit" ? "Registro" : "Edição",  dataLog: Date.now()}
       const body = { nome,  cpf,  rg,  nomeMae, dataNascimento, dataCadastro: Date.now() }
       const {url, options} = props.typeIcon != "edit" ? await POST_INDEX('user', body) : await PUT_INDEX('user', body);
       const {response, json} = await request(url, options);
-      console.log("response: ", response);
-      console.log("json: ", error);
       if(response.status === 200) {
         setOpenAlert(true);
-        setOpen(false);
-        setNome("");
-        setCpf("");
-        setRg("");
-        setNomeMae("");
-        setDataNascimento("");
-        setDataCadastro("");
+        setOpen(false); 
+        setNome(""); setCpf(""); setRg(""); setNomeMae(""); setDataNascimento(""); setDataCadastro("");
         const {url, options} = await POST_INDEX('logs', bodyLog)
         const {response, json} = await request(url, options);
       }else{
@@ -124,14 +86,14 @@ function Register(props) {
   
     return (
       <>
-        <div>
-          <Button className="btn" onClick={handleClickOpenLogs} variant="contained" >
+        <Box sx={{ width: '95%', display: 'flex', justifyContent: 'flex-end'}}>
+          <Button className="btn" sx={{m: 2}} onClick={handleClickOpenLogs} variant="contained" >
             Ver logs
           </Button>
-          <Button className="btn" onClick={handleClickOpen} variant="contained" color="success">
+          <Button className="btn" sx={{m: 2}} onClick={handleClickOpen} variant="contained" color="success">
             Novo usuário
           </Button>
-        </div>
+        </Box>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -146,43 +108,10 @@ function Register(props) {
             <DialogContentText id="alert-dialog-description">
                 <div>
                 <Box component="form" sx={{'& .MuiTextField-root': { m: 1, width: '25ch' },}} noValidate autoComplete="off">
-                    <TextField 
-                      required 
-                      id="standard-basic" 
-                      label="Nome" 
-                      variant="standard" 
-                      margin="dense" 
-                      className="container-register-input"
-                      value={nome}
-                      onChange = {(e) => setNome(e.target.value)}
-                    />
-                    <TextField 
-                      required
-                      id="standard-basic" 
-                      label="RG" 
-                      variant="standard" 
-                      margin="dense" 
-                      className="container-register-input"
-                      value={rg}
-                      onChange = {(e) => setRg(e.target.value)}/>
-                    <TextField 
-                      required
-                      id="standard-basic" 
-                      label="CPF" 
-                      variant="standard" 
-                      margin="dense" 
-                      className="container-register-input"
-                      value={cpf}
-                      onChange = {(e) => setCpf(e.target.value)}/>
-                    <TextField 
-                      required
-                      id="standard-basic" 
-                      label="Nome da mãe" 
-                      variant="standard" 
-                      margin="dense" 
-                      className="container-register-input"
-                      value={nomeMae}
-                      onChange = {(e) => setNomeMae(e.target.value)}/>
+                    <TextField required id="standard-basic" label="Nome" variant="standard" margin="dense" className="container-register-input"value={nome}onChange = {(e) => setNome(e.target.value)} />
+                    <TextField requiredid="standard-basic" label="RG" variant="standard" margin="dense" className="container-register-input"value={rg}onChange = {(e) => setRg(e.target.value)}/>
+                    <TextField requiredid="standard-basic" label="CPF" variant="standard" margin="dense" className="container-register-input"value={cpf}onChange = {(e) => setCpf(e.target.value)}/>
+                    <TextField requiredid="standard-basic" label="Nome da mãe" variant="standard" margin="dense" className="container-register-input"value={nomeMae}onChange = {(e) => setNomeMae(e.target.value)}/>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
                         label="Data de nascimento"
@@ -232,7 +161,7 @@ function Register(props) {
                           <HistoryIcon />
                         </Avatar>
                       </ListItemAvatar>
-                      <ListItemText primary={"Acação: "+log.acao} secondary={"CPF usuário afetado: "+log.cpfUsuarioAlterado+" | Data: "+dateFormatedLog} />
+                      <ListItemText primary={"Ação: "+log.acao} secondary={"CPF usuário afetado: "+log.cpfUsuarioAlterado+" | Data: "+dateFormatedLog} />
                     </ListItem>
                     )
                   })}
