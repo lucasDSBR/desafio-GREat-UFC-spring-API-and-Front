@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lucas.springAPI.domain.seletores.SearchUserSeletor;
 import com.lucas.springAPI.model.entities.UserEntity;
 import com.lucas.springAPI.model.repositories.UserRepository;
 import com.lucas.springAPI.services.UserService;
@@ -59,6 +61,12 @@ public class UserController {
 	@RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT}, path = "/user")
 	public UserEntity registerUser(@RequestBody UserEntity dataUser) {
 		return userService.registerAndUpdateUser(dataUser);
+	}
+	
+	@PostMapping(path = "userFilter")
+	public Iterable<UserEntity> userFilter(@RequestBody UserEntity filter) {
+		
+		return userService.searchUser(filter);
 	}
 	
 	@DeleteMapping(path = "/user/{idUser}")
